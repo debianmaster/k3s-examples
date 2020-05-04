@@ -120,3 +120,34 @@ iptables -A OUTPUT -p tcp -m string --string "docker.io" --algo kmp -j REJECT
 ```
 helm template ./cert-manager-v0.12.0.tgz | k apply -f-
 ```
+
+
+## add more machines
+```
+sudo su
+setenforce 0
+wget https://github.com/rancher/k3s/releases/download/v1.18.2-rc2%2Bk3s1/k3s-airgap-images-amd64.tar
+wget https://github.com/rancher/k3s/releases/download/v1.18.2-rc2%2Bk3s1/k3s
+curl -sfL https://get.k3s.io > install.sh
+chmod +x install.sh
+chmod +x k3s 
+
+export ip=<machine_with_priv_reg>
+cat > /etc/rancher/k3s/registries.yaml <<EOF
+mirrors:
+  docker.io:
+    endpoint:
+      - "http://${ip}:5000"
+  ${ip}:5000:
+    endpoint:
+      - "http://${ip}:5000"
+EOF
+
+export MASTER=172.31.28.23. #replace with master ip
+
+mkdir -p /var/lib/rancher/k3s/agent/images/
+cp k3s-airgap-images-amd64.tar /var/lib/rancher/k3s/agent/images/
+mv k3s /usr/local/bin/k3s
+K3S_URL=https://${MASTER}:6443 INSTALL_K3S_SKIP_DOWNLOAD=true K3S_TOKEN=mynodetoken ./install.sh
+
+```
