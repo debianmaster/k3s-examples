@@ -65,7 +65,7 @@ chmod 700 get_helm.sh
 helm repo add jetstack https://charts.jetstack.io
 helm repo update
 helm fetch jetstack/cert-manager --version v0.12.0
-helm template ./cert-manager-v0.12.0.tgz | grep -oP '(?<=image: ").*(?=")' >> ./image-list.txt
+helm template ./cert-manager-v0.12.0.tgz | grep -oP "(?<=image: ).*(?=)" | tr -d \' | tr -d \" >> ./image-list.txt
 
 
 iptables -A OUTPUT -p tcp -m string --string "docker.io" --algo kmp -j REJECT
