@@ -27,7 +27,7 @@ docker run -d \
   registry:2
 ```
 
-> any request to docker.io/org/imagename will be now made as http://${ip}:5000/org/imagename
+> any request to docker.io/org/imagename will be now made as http://${ip}:5000/org/imagename   
 > containerd first checks if an image is there in http://${ip}:5000/org/imagename, else image will be pulled and cached in intermediate registry
 ```
 cat > /etc/rancher/k3s/registries.yaml <<EOF
