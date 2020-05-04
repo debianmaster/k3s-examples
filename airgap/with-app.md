@@ -61,7 +61,7 @@ systemctl restart k3s
 kubectl  get nodes
 ```
 
-## Install required cli tools
+## Install required cli tools [helm,skopeo]
 ```
 . /etc/os-release
 sudo sh -c "echo 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/x${NAME}_${VERSION_ID}/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list"
@@ -113,4 +113,10 @@ done < "$input"
 ## to test disconnect registry pull
 ```
 iptables -A OUTPUT -p tcp -m string --string "docker.io" --algo kmp -j REJECT
+```
+
+
+## deploy application
+```
+helm template ./cert-manager-v0.12.0.tgz | k apply -f-
 ```
