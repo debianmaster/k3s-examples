@@ -13,7 +13,7 @@
  > W/o Internet access
  mkdir -p /var/lib/rancher/k3s/agent/images/
  cp k3s-airgap-images-amd64.tar /var/lib/rancher/k3s/agent/images/
- mv k3s /usr/local/bin/k3s
+ cp k3s /usr/local/bin/k3s
  INSTALL_K3S_SKIP_DOWNLOAD=true K3S_TOKEN=mynodetoken ./install.sh
  systemctl restart k3s
  kubectl  get nodes
