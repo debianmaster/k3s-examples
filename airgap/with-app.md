@@ -27,8 +27,9 @@ docker run -d \
   registry:2
 ```
 
-# any request to docker.io/org/imagename will be now made as http://${ip}:5000/org/imagename
-# containerd first checks if an image is there in http://${ip}:5000/org/imagename, else image will be pulled and cached in intermediate registry
+> any request to docker.io/org/imagename will be now made as http://${ip}:5000/org/imagename
+> containerd first checks if an image is there in http://${ip}:5000/org/imagename, else image will be pulled and cached in intermediate registry
+```
 cat > /etc/rancher/k3s/registries.yaml <<EOF
 mirrors:
   docker.io:
@@ -38,7 +39,7 @@ mirrors:
     endpoint:
       - "http://${ip}:5000"
 EOF
-
+```
 ## Download k3s binary and k3s system images
 
 ```
@@ -84,6 +85,7 @@ helm template ./cert-manager-v0.12.0.tgz | grep -oP "(?<=image: ).*(?=)" | tr -d
 ```
 
 ## sync images from pubic repo to private reg
+
 ```
 ex:- 
 skopeo copy docker://quay.io/jetstack/cert-manager-cainjector:v0.12.0 docker://localhost:5000/jetstack/cert-manager-cainjector:v0.12.0 --dest-tls-verify=false
